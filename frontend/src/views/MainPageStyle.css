@@ -1,0 +1,45 @@
+.dropdown {
+    position: relative;
+    display: block;
+}
+
+.dropdown-content{
+    max-height: 0;          /*fait l'agrandissement*/
+    opacity: 0;             /*Pour le style*/
+    transition: max-height 1s ease-in-out, opacity 0.5s ease-in-out;
+    overflow: hidden;
+}
+
+/*> prend le premier element du nom dropdown-content seulement*/
+.dropdown:hover > .dropdown-content{
+    max-height: 500px;
+    opacity: 1;
+    transition: all 1s ease-in-out;
+}
+
+.produit-select{
+    text-align: center;
+    padding: 0.3em 2em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 500px;
+    background-color: lightgray;
+    border-radius: 0.5em;
+}
+.remove-btn{
+    padding: 0.2em;
+    background-color: gray;
+    border-radius: 0.2em;
+}
+.add-button{
+    display: flex;
+    justify-content: center;
+    padding: 0.2em;
+    background-color: lightgreen;
+    border-radius: 0.2em;
+    margin-top: 3em;
+}
+.add-button:hover{
+    background-color: darkgreen;
+}
