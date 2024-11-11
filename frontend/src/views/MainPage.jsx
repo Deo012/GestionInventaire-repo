@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./MainPageStyle.css";
 import "./reset.css";
 import {Link} from "react-router-dom"
+import axios, { AxiosHeaders } from "axios";
 
 
 let produits = [
@@ -34,9 +35,15 @@ let produits = [
 const MainPage = () => {
     let [produitItems, setProduits] = useState(produits);
 
-    const deleteProduit = (produitName) => {
-        const updatedProduitsList = produitItems.filter(item => item.nom_produit !== produitName);
-        setProduits(updatedProduitsList);
+    const deleteProduit = (produitActuel) => {
+        axios.delete(`http://127.0.0.1:8000/api/produits/${produitActuel.id}/`, produitActuel)
+            .then((response) => {
+                console.log("Reponse de soummision : ", response);
+            })
+            .catch((error) => {
+                console.error("Il y a eu une erreur lors de la suppression du produit", error);
+            });
+
     }
 
     function AfficheProduit() {
@@ -48,7 +55,10 @@ const MainPage = () => {
     
                             <div className="produit-select">
                                 <p>Nom: {produit.nom_produit}</p>
-                                <button className="remove-btn" onClick={() => deleteProduit(produit.nom_produit)}>remove</button>
+                                <div>
+                                    <button className="remove-btn" onClick={() => deleteProduit(produit)}>remove</button>
+                                    <Link to={`/modifierProduit/${produit.id}/${produit.nom_produit}/${produit.description_produit}/${produit.type_produit}/${produit.quantite_actuelle}/${produit.seuil_minimum}`}>Modifier</Link>
+                                </div>
                             </div>
     
                             <div className="dropdown-content" >
@@ -64,12 +74,25 @@ const MainPage = () => {
         );
     }
 
+    const handleRefresh = () =>{
+        axios
+            .get("api/produits/")
+            .then((res)=>{setProduits(res.data);})
+            .catch((err)=>{console.error("Error fetching products: ", err)})
+    }
+    useEffect(()=>{
+        handleRefresh();
+    },[])
+
     return(
         <>
             <div>
                 <h1>Affichage des produits</h1>
                 <div>{AfficheProduit()}</div>
-                <div className="add-button">  <Link to="/ajouterProduit">Ajouter</Link> </div> 
+                <div className="add-button">  
+                    <Link to="/ajouterProduit">Ajouter</Link> 
+                    <button onClick={handleRefresh}> Refresh item</button>
+                </div> 
             </div>
         </>
     );

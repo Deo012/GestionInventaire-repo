@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -17,7 +18,15 @@ const AjouterProduit = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Add logic here to handle the form submission (e.g., add product to list)
+        
+        axios.post(`http://127.0.0.1:8000/api/produits/`, formValues)
+            .then((response) => {
+                console.log("Reponse de soummision : ", response);
+            })
+            .catch((error) => {
+                console.error("Il y a eu une erreur lors de l'ajout du nouveau produit", error);
+            }); 
+
         console.log("Form submitted:", formValues);
     };
 
@@ -30,10 +39,9 @@ const AjouterProduit = () => {
                     <input
                         type="text"
                         name="nom_produit"
-                        placeholder="Nom produit"
+                        placeholder="--"
                         value={formValues.nom_produit}
                         onChange={handleChange}
-                        required
                     />
                 </div>
 
@@ -42,10 +50,9 @@ const AjouterProduit = () => {
                     <input
                         type="text"
                         name="description_produit"
-                        placeholder="Description produit"
+                        placeholder="--"
                         value={formValues.description_produit}
                         onChange={handleChange}
-                        required
                     />
                 </div>
 
@@ -54,10 +61,9 @@ const AjouterProduit = () => {
                     <input
                         type="text"
                         name="type_produit"
-                        placeholder="Type produit"
+                        placeholder="--"
                         value={formValues.type_produit}
                         onChange={handleChange}
-                        required
                     />
                 </div>
 
@@ -66,10 +72,9 @@ const AjouterProduit = () => {
                     <input
                         type="number"
                         name="quantite_actuelle"
-                        placeholder="Quantité actuelle"
+                        placeholder="--"
                         value={formValues.quantite_actuelle}
                         onChange={handleChange}
-                        required
                     />
                 </div>
 
@@ -78,10 +83,9 @@ const AjouterProduit = () => {
                     <input
                         type="number"
                         name="seuil_minimum"
-                        placeholder="Seuil minimum"
+                        placeholder="--"
                         value={formValues.seuil_minimum}
                         onChange={handleChange}
-                        required
                     />
                 </div>
 

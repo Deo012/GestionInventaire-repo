@@ -12,7 +12,7 @@ function App() {
         <Routes>
           <Route exact path="/" element = {<MainPage/>}/>
           <Route path="/ajouterProduit" element = {<AjouterProduit/>}/>
-          <Route path="/modifierProduit" element = {<ModifierProduit/>}/>
+          <Route path="/modifierProduit/:id/:nom_produit/:description_produit/:type_produit/:quantite_actuelle/:seuil_minimum" element = {<ModifierProduit/>}/>
         </Routes>
       </BrowserRouter>
     </>
